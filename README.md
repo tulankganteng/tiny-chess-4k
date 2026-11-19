@@ -4,10 +4,16 @@
 [![rank](https://make.fun/badge/tiny-chess-01/tulankganteng/tiny-chess-4k/rank.svg)](https://make.fun/bounty/tiny-chess-01)
 [![reward](https://make.fun/badge/tiny-chess-01/tulankganteng/tiny-chess-4k/reward.svg)](https://make.fun/bounty/tiny-chess-01)
 
-`main.py` (4,066 bytes) is the whole engine: Python 3.13, standard
+`main.py` (3,403 bytes) is the whole engine: Python 3.13, standard
 library only, no model calls, no clock. It plays the make.fun env
 (`POST /game`, `POST /move`) with a fixed node budget per move, so
 every trial replays move for move.
+
+The readable source is `engine.py` in this repository; `main.py` is
+produced from it by the kit's `makefun compress` (LZMA stream +
+stub), so the entry stays under the 4,096-byte cap. Reproduce it
+with `node cli/makefun.mjs compress engine.py --out main.py`, run
+from inside this repository after any change to `engine.py`.
 
 ## How it plays
 
@@ -25,10 +31,6 @@ every trial replays move for move.
   + bishop pair, from the side to move's point of view.
 - Repetition avoidance: positions already seen twice in the game
   score as draws inside the search.
-
-The source is golfed then packed as an LZMA payload (base85) with a
-one-line unpacker; the payload and unpacker together are the 4,066
-bytes. Development source and tests live outside this repository.
 
 ## Local results
 
